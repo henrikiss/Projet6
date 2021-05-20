@@ -151,17 +151,11 @@ export class SaucesService {
 
   createSauce(sauce: Sauce, image: File) {
     return new Promise((resolve, reject) => {
-      let formData = new FormData();
+      const formData = new FormData();
       formData.append('sauce', JSON.stringify(sauce));
       formData.append('image', image, sauce.name);
-      let data: any = {
-        'sauce': JSON.stringify(sauce),
-        'image': image,
-        'fileName': sauce.name
-      };
-      
-      console.log('DATA send: ' + JSON.stringify(data));
-      this.http.post('http://localhost:3000/api/sauces', data).subscribe(
+      console.log('DATA send: ' + JSON.stringify(formData));
+      this.http.post('http://localhost:3000/api/sauces', formData).subscribe(
         (response: { message: string }) => {
           resolve(response);
         },

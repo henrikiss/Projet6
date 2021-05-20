@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SaucesService } from '../services/sauces.service';
 import { Sauce } from '../models/Sauce.model';
 import { AuthService } from '../services/auth.service';
+import { SaucesService } from '../services/sauces.service';
 
 @Component({
   selector: 'app-sauce-form',
