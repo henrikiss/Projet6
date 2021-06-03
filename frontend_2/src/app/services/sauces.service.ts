@@ -114,11 +114,11 @@ export class SaucesService {
   likeSauce(id: string, like: boolean) {
     return new Promise((resolve, reject) => {
       this.http.post(
-        'http://localhost:3000/api/sauces/' + id + '/like',
-        {
+        'http://localhost:3000/api/sauces/' + id + '/like', {
           userId: this.auth.getUserId(),
           like: like ? 1 : 0
-        })
+        }
+       )
         .subscribe(
           (response: { message: string }) => {
             resolve(like);
