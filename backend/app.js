@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const dotenv = require('dotenv').config();
 const mongoose = require('mongoose');
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
@@ -42,11 +43,11 @@ const sauceRoutes = require('./routes/sauce');
 
 const app = express ();
 
-mongoose.connect('mongodb+srv://henri:kissinger@cluster0.7s1xd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+mongoose.connect(process.env.MONGODB_URI,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
-  .catch(() => console.log('Connexion à MongoDB échouée !'));
+  .catch(err => console.log('Connexion à MongoDB échouée !: ' + err.message));
 
 
 
@@ -80,6 +81,8 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/stuff', stuffRoutes);
 app.use('/api/auth', userRoutes);
 app.use('/api/sauces', sauceRoutes);
+
+const PORT = process.env.PORT || 3000;
 
 if (process.env.NODE_ENV !== 'production') {
   logger.add(new winston.transports.Console({
