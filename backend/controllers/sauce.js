@@ -35,12 +35,12 @@ exports.getAllSauces = (req, res, next) => {
     if (!req.body.sauce) {
       return res.status(400).send(new Error('Bad request: ' + JSON.stringify(res.body)));
     }
-    console.log('DATA IMAGE: '+ JSON.stringify(req.body.image));
+    console.log('DATA IMAGE: '+ JSON.stringify(req.body.sauce));
     const sauceObject = JSON.parse(req.body.sauce);
     delete sauceObject._id;
     const sauce = new Sauce({
       ...sauceObject,
-      imageUrl: `${req.body.image}`
+      imageUrl:`${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     });
     sauce.save()
       .then(() => res.status(201).json({ message: 'Objet enregistré !'}))

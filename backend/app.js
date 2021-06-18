@@ -21,19 +21,14 @@ const logger = winston.createLogger({
     new winston.transports.File({ filename: 'combined.log' }),
   ],
 });
-const passwordValidator = require('password-validator');
-// Create a schema
-const schema = new passwordValidator();
- 
-// Add properties to it
-schema
-.is().min(8)                                    // Minimum length 8
-.is().max(100)                                  // Maximum length 100
-.has().uppercase()                              // Must have uppercase letters
-.has().lowercase()                              // Must have lowercase letters
-.has().digits(2)                                // Must have at least 2 digits
-.has().not().spaces()                           // Should not have spaces
-.is().not().oneOf(['Passw0rd', 'Password123']); // Blacklist these values
+
+mongoose.connect(process.env.MONGODB_URI,
+  { useNewUrlParser: true,
+    useUnifiedTopology: true })
+  .then(() => console.log('Connexion à MongoDB réussie !'))
+  .catch(err => console.log('Connexion à MongoDB échouée !: ' + err.message));
+
+
 
 const path = require('path');
 
@@ -43,11 +38,7 @@ const sauceRoutes = require('./routes/sauce');
 
 const app = express ();
 
-mongoose.connect(process.env.MONGODB_URI,
-  { useNewUrlParser: true,
-    useUnifiedTopology: true })
-  .then(() => console.log('Connexion à MongoDB réussie !'))
-  .catch(err => console.log('Connexion à MongoDB échouée !: ' + err.message));
+
 
 
 
